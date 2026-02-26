@@ -172,6 +172,105 @@ Examples:
 - **React Hook Form + Zod** for all forms — never use uncontrolled forms or `useState` for form state
 - **Clerk hooks** (`useAuth`, `useUser`, `useClerk`) for all auth state — never store tokens manually
 
+#### Design System & Visual Identity
+
+> **Style**: Material Design foundations with a youthful, energetic campus vibe
+
+##### Color Palette
+
+| Token | Value | Usage |
+|---|---|---|
+| `--background` | `#0A0A0A` | Page background (near-black) |
+| `--surface` | `#121212` | Cards, modals, sheets |
+| `--surface-variant` | `#1E1E1E` | Elevated surfaces, hover states |
+| `--primary` | `#A855F7` (purple-500) | Primary accent — buttons, links, active states |
+| `--primary-light` | `#C084FC` (purple-400) | Hover states, highlights |
+| `--primary-dark` | `#7C3AED` (purple-600) | Pressed states, deeper accents |
+| `--secondary` | `#E9D5FF` (purple-100) | Tags, badges, subtle highlights |
+| `--text-primary` | `#FAFAFA` | Headings, body text |
+| `--text-secondary` | `#A1A1AA` (zinc-400) | Muted text, captions |
+| `--text-tertiary` | `#71717A` (zinc-500) | Placeholders, disabled text |
+| `--border` | `#27272A` (zinc-800) | Card borders, dividers |
+| `--success` | `#22C55E` | Confirmed, delivered, positive states |
+| `--warning` | `#F59E0B` | Pending, attention needed |
+| `--destructive` | `#EF4444` | Errors, cancellations, delete actions |
+
+##### Typography
+
+| Role | Font Family | Weight | Usage |
+|---|---|---|---|
+| **Brand / Logo** | `Fairplay Display` | 700 (Bold) | "Unideal" wordmark, hero headings |
+| **Body / UI** | `Poppins` | 300–600 | All other text — headings, body, buttons, captions |
+
+Load via Google Fonts:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+```
+
+Tailwind config:
+```typescript
+fontFamily: {
+  brand: ['"Playfair Display"', 'serif'],
+  sans: ['Poppins', 'system-ui', 'sans-serif'],
+}
+```
+
+Usage:
+- `font-brand` — only for the "Unideal" logo text and major hero headings
+- `font-sans` (default) — everything else (Poppins is the base font)
+
+##### Gradient Buttons & Glow
+
+Primary action buttons use a **purple gradient with a subtle glow**:
+
+```css
+/* Primary gradient button */
+.btn-primary-gradient {
+  background: linear-gradient(135deg, #7C3AED, #A855F7, #C084FC);
+  color: #FAFAFA;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.35);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.btn-primary-gradient:hover {
+  box-shadow: 0 0 30px rgba(168, 85, 247, 0.55);
+  transform: translateY(-1px);
+}
+.btn-primary-gradient:active {
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.25);
+  transform: translateY(0);
+}
+```
+
+Tailwind utility approach (preferred):
+```tsx
+<Button
+  className="bg-gradient-to-r from-purple-600 via-purple-500 to-purple-400
+             text-white shadow-[0_0_20px_rgba(168,85,247,0.35)]
+             hover:shadow-[0_0_30px_rgba(168,85,247,0.55)]
+             hover:-translate-y-0.5 transition-all duration-200"
+>
+  List Item
+</Button>
+```
+
+**Button hierarchy**:
+| Variant | Style | Use Case |
+|---|---|---|
+| Primary (CTA) | Purple gradient + glow | Main actions: "List Item", "Buy Now", "Send Offer" |
+| Secondary | `bg-surface-variant` + purple text | Supporting actions: "Save", "Filter" |
+| Ghost | Transparent + purple text | Tertiary actions: "Cancel", "Back" |
+| Destructive | Red solid | Dangerous actions: "Delete", "Report" |
+
+##### Visual Details
+
+- **Border radius**: `rounded-xl` (12px) on cards, `rounded-lg` (8px) on buttons/inputs
+- **Card style**: Dark surface (`bg-[#121212]`) with `border border-zinc-800` and subtle hover glow
+- **Hover glow on cards**: `hover:shadow-[0_0_15px_rgba(168,85,247,0.15)]`
+- **Elevation**: Use `box-shadow` glow instead of Material Design's grey shadow — keeps the dark-theme cohesion
+- **Animations**: Smooth Framer Motion springs (`type: "spring", stiffness: 300, damping: 25`)
+- **Iconography**: Lucide React icons, 20px default size, `text-zinc-400` default color
+- **Spacing rhythm**: 4px base grid — use Tailwind spacing scale (`p-2`, `p-4`, `gap-3`, `gap-6`)
+
 #### Component Architecture
 ```
 // Every component follows this structure:
